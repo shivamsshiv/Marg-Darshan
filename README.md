@@ -1,4 +1,6 @@
-# AI Guidance System
+# Marg-Darshan
+
+AI Guidance System for visually impaired guidance and navigation.
 
 Web-first assistive guidance prototype with camera, 3 FPS frame control, object detection, tracking-ready output, depth hints, direction detection, optional voice questions, intent understanding, OCR-on-demand, decision logic, sentence generation, and voice output.
 
