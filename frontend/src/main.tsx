@@ -24,7 +24,8 @@ type GuidanceResponse = {
   debug: Record<string, unknown>;
 };
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const rawApiUrl = (import.meta.env.VITE_API_URL ?? "http://localhost:8000").replace(/\/+$/, "");
+const API_URL = rawApiUrl.startsWith("http") ? rawApiUrl : `https://${rawApiUrl}`;
 const FRAME_INTERVAL_MS = 333;
 const PROCESSING_WIDTH = 640;
 
@@ -185,7 +186,14 @@ function App() {
         body: form,
       });
       if (!response.ok) throw new Error(`Backend returned ${response.status}`);
-      const data = (await response.json()) as GuidanceResponse;
+      const text = await response.text();
+      if (!text) throw new Error("Backend returned empty response (it may be waking up — retry in a few seconds)");
+      let data: GuidanceResponse;
+      try {
+        data = JSON.parse(text) as GuidanceResponse;
+      } catch {
+        throw new Error("Backend returned non-JSON response (it may still be starting up)");
+      }
       setResult(data);
       setGuidance(data.guidance);
       speak(data.guidance);

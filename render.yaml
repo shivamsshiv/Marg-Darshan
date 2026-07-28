@@ -19,9 +19,13 @@ services:
     runtime: static
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: "./frontend/dist"
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
     envVars:
       - key: VITE_API_URL
         fromService:
           type: web
           name: marg-darshan-backend
-          property: host
+          property: hostport
