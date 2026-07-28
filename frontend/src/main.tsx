@@ -24,8 +24,17 @@ type GuidanceResponse = {
   debug: Record<string, unknown>;
 };
 
-const rawApiUrl = (import.meta.env.VITE_API_URL ?? "http://localhost:8000").replace(/\/+$/, "");
-const API_URL = rawApiUrl.startsWith("http") ? rawApiUrl : `https://${rawApiUrl}`;
+function resolveApiUrl(): string {
+  const raw = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "").trim();
+  if (!raw || raw === "http://localhost:8000") return "http://localhost:8000";
+  // If it's already a full URL with protocol, use as-is
+  if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
+  // If it contains a dot, it's a hostname — just add protocol
+  if (raw.includes(".")) return `https://${raw}`;
+  // Otherwise it's likely a Render service name — build the full URL
+  return `https://${raw}.onrender.com`;
+}
+const API_URL = resolveApiUrl();
 const FRAME_INTERVAL_MS = 333;
 const PROCESSING_WIDTH = 640;
 
