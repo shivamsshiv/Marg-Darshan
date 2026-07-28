@@ -25,7 +25,4 @@ services:
         value: no-cache
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: marg-darshan-backend
-          property: hostport
+        value: "https://marg-darshan-backend.onrender.com"
