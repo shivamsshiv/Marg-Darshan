@@ -1,6 +1,10 @@
+import os
+from pathlib import Path
+
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from modules.pipeline import GuidancePipeline
 from modules.schemas import GuidanceResponse, HealthResponse
@@ -50,3 +54,8 @@ async def process_voice_only(
 ) -> JSONResponse:
     result = pipeline.process_voice_only(voice_text=voice_text.strip(), speak=speak)
     return JSONResponse(result.model_dump())
+
+
+static_dir = Path(os.getenv("STATIC_DIR", ""))
+if static_dir.is_dir():
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="frontend")
