@@ -1,7 +1,27 @@
 services:
+  # Backend FastAPI Service
   - type: web
-    name: marg-darshan
-    runtime: docker
+    name: marg-darshan-backend
+    runtime: python
+    region: oregon
     plan: free
-    healthCheckPath: /health
-    autoDeploy: true
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+  # Frontend Static Site
+  - type: web
+    name: marg-darshan-frontend
+    runtime: static
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: marg-darshan-backend
+          property: host
