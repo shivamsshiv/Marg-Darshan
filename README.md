@@ -1,10 +1,24 @@
 # Marg-Darshan
 
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_App-brightgreen?style=for-the-badge)](https://marg-darshan-frontend.onrender.com)
+[![Backend API](https://img.shields.io/badge/⚡_Backend_API-Health_Check-blue?style=for-the-badge)](https://marg-darshan-backend.onrender.com/health)
+[![Render](https://img.shields.io/badge/Deployed_on-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
+
 AI Guidance System for visually impaired guidance and navigation.
 
 Web-first assistive guidance prototype with camera, 3 FPS frame control, object detection, tracking-ready output, depth hints, direction detection, optional voice questions, intent understanding, OCR-on-demand, decision logic, sentence generation, and voice output.
 
 The app is designed so it works today in demo mode, then upgrades cleanly when you add YOLO, MiDaS, BERT, and T5 model weights.
+
+## 🌐 Live Demo
+
+| Service | URL |
+|---------|-----|
+| **Frontend App** | [https://marg-darshan-frontend.onrender.com](https://marg-darshan-frontend.onrender.com) |
+| **Backend API** | [https://marg-darshan-backend.onrender.com](https://marg-darshan-backend.onrender.com) |
+| **Health Check** | [https://marg-darshan-backend.onrender.com/health](https://marg-darshan-backend.onrender.com/health) |
+
+> **Note:** The app is hosted on Render's free tier. The first request may take ~30 seconds if the backend is waking up from sleep.
 
 ## Flow
 
